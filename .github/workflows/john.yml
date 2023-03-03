@@ -11,12 +11,27 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
+      - uses: actions/cache@v2
+        name: "Cache Data"
+        with:
+          path: |
+            rockyou.txt
+            john-1.8.0.9-jumbo-macosx_sse4
+          key: ${{ runner.os }}
+          restore-keys: |
+            ${{ runner.os }}
+
       - name: Install Dependencies
         run: |
-          curl https://download.openwall.net/pub/projects/john/contrib/macosx/john-1.8.0.9-jumbo-macosx_sse4.zip -O
-          curl https://download.weakpass.com/wordlists/90/rockyou.txt.gz -O
-          gunzip rockyou.txt.gz
-          unzip john-1.8.0.9-jumbo-macosx_sse4.zip
+          if test -f "rockyou.txt"; then
+              echo "FILE exists."
+          else
+              echo "NOT exists. DOWNLOADING..."
+              curl https://download.openwall.net/pub/projects/john/contrib/macosx/john-1.8.0.9-jumbo-macosx_sse4.zip -O
+              curl https://download.weakpass.com/wordlists/90/rockyou.txt.gz -O
+              gunzip rockyou.txt.gz
+              unzip john-1.8.0.9-jumbo-macosx_sse4.zip
+          fi
       
       - name: Checking 
         run: |
@@ -28,11 +43,12 @@ jobs:
 
       - name: Cracking
         run: |
-          john-1.8.0.9-jumbo-macosx_sse4/run/john --format=phpass-opencl -w=rockyou.txt hash
+          john-1.8.0.9-jumbo-macosx_sse4/run/john --format=phpass -w=rockyou.txt hash
 
       - name: Show
         run: |
           john-1.8.0.9-jumbo-macosx_sse4/run/john --show hash > result.txt
+          cat result.txt
       
       - name: Result
         uses: actions/upload-artifact@v3
