@@ -2,7 +2,7 @@ name: John
 
 on:
   push:
-    branches: ["*"]
+    branches: ["**"]
 
 jobs:
   build:
