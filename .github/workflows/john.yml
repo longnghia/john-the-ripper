@@ -13,25 +13,26 @@ jobs:
 
       - name: Install Dependencies
         run: |
-          curl https://download.openwall.net/pub/projects/john/contrib/macosx/john-1.8.0.9-jumbo-macosx_avx2.zip -O
+          curl https://download.openwall.net/pub/projects/john/contrib/macosx/john-1.8.0.9-jumbo-macosx_sse4.zip -O
           curl https://download.weakpass.com/wordlists/90/rockyou.txt.gz -O
           gunzip rockyou.txt.gz
-          unzip john-1.8.0.9-jumbo-macosx_avx2.zip
+          unzip john-1.8.0.9-jumbo-macosx_sse4.zip
       
       - name: Checking 
         run: |
           ls -la
-          ls -la john-1.8.0.9-jumbo-macosx_avx2
-          john-1.8.0.9-jumbo-macosx_avx2/run/john
-          john-1.8.0.9-jumbo-macosx_avx2/run/john --list=formats | grep phpass
+          ls -la john-1.8.0.9-jumbo-macosx_sse4
+          ls -la john-1.8.0.9-jumbo-macosx_sse4/run
+          john-1.8.0.9-jumbo-macosx_sse4/run/john
+          john-1.8.0.9-jumbo-macosx_sse4/run/john --list=formats | grep phpass
 
       - name: Cracking
         run: |
-          john-1.8.0.9-jumbo-macosx_avx2/run/john --format=phpass-opencl -w=rockyou.txt hash
+          john-1.8.0.9-jumbo-macosx_sse4/run/john --format=phpass-opencl -w=rockyou.txt hash
 
       - name: Show
         run: |
-          john-1.8.0.9-jumbo-macosx_avx2/run/john --show hash > result.txt
+          john-1.8.0.9-jumbo-macosx_sse4/run/john --show hash > result.txt
       
       - name: Result
         uses: actions/upload-artifact@v3
