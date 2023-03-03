@@ -16,11 +16,12 @@ jobs:
           curl https://download.openwall.net/pub/projects/john/contrib/macosx/john-1.8.0.9-jumbo-macosx_avx2.zip -O
           curl https://download.weakpass.com/wordlists/90/rockyou.txt.gz -O
           gunzip rockyou.txt.gz
-          unzip john-1.8.0.9-jumbo-macosx_avx2.zip -d john-1.8.0.9-jumbo-macosx_avx2
+          unzip john-1.8.0.9-jumbo-macosx_avx2.zip
       
       - name: Checking 
         run: |
           ls -la
+          ls -la john-1.8.0.9-jumbo-macosx_avx2
           john-1.8.0.9-jumbo-macosx_avx2/john
           john-1.8.0.9-jumbo-macosx_avx2/john --list=formats | grep phpass
 
