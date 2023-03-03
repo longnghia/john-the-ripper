@@ -22,16 +22,16 @@ jobs:
         run: |
           ls -la
           ls -la john-1.8.0.9-jumbo-macosx_avx2
-          john-1.8.0.9-jumbo-macosx_avx2/john
-          john-1.8.0.9-jumbo-macosx_avx2/john --list=formats | grep phpass
+          john-1.8.0.9-jumbo-macosx_avx2/run/john
+          john-1.8.0.9-jumbo-macosx_avx2/run/john --list=formats | grep phpass
 
       - name: Cracking
         run: |
-          john-1.8.0.9-jumbo-macosx_avx2/john --format=phpass-opencl -w=rockyou.txt hash
+          john-1.8.0.9-jumbo-macosx_avx2/run/john --format=phpass-opencl -w=rockyou.txt hash
 
       - name: Show
         run: |
-          john-1.8.0.9-jumbo-macosx_avx2/john --show hash > result.txt
+          john-1.8.0.9-jumbo-macosx_avx2/run/john --show hash > result.txt
       
       - name: Result
         uses: actions/upload-artifact@v3
