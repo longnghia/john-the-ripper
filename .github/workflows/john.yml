@@ -1,0 +1,41 @@
+name: John
+
+on:
+  push:
+    branches: ["*"]
+
+jobs:
+  build:
+    runs-on: macos-12
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Install Dependencies
+        run: |
+          curl https://download.openwall.net/pub/projects/john/contrib/macosx/john-1.8.0.9-jumbo-macosx_avx2.zip -O
+          curl https://download.weakpass.com/wordlists/90/rockyou.txt.gz -O
+          gunzip rockyou.txt.gz
+          unzip john-1.8.0.9-jumbo-macosx_avx2.zip -d john-1.8.0.9-jumbo-macosx_avx2
+      
+      - name: Checking 
+        run: |
+          ls -la
+          john-1.8.0.9-jumbo-macosx_avx2/john
+          john-1.8.0.9-jumbo-macosx_avx2/john --list=formats | grep phpass
+
+      - name: Cracking
+        run: |
+          john-1.8.0.9-jumbo-macosx_avx2/john --format=phpass-opencl -w=rockyou.txt hash
+
+      - name: Show
+        run: |
+          john-1.8.0.9-jumbo-macosx_avx2/john --show hash > result.txt
+      
+      - name: Result
+        uses: actions/upload-artifact@v3
+        with:
+          name: result.txt
+          path: result.txt
+
+
