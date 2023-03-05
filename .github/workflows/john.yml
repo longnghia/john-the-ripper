@@ -48,12 +48,12 @@ jobs:
       - name: Show
         run: |
           john-1.8.0.9-jumbo-macosx_sse4/run/john --show hash > result.txt
+          echo "RESULT=$(cat result.txt)" >> $GITHUB_OUTPUT
           cat result.txt
+        id: show_result
       
-      - name: Result
-        uses: actions/upload-artifact@v3
-        with:
-          name: result.txt
-          path: result.txt
-
+      - name: Send mail
+        run: |
+          chmod +x mail.sh
+          ./mail.sh ${{ secrets.SMTP_CLIENT }} ${{ steps.show_result.outputs.RESULT }}
 
