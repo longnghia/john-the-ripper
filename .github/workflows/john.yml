@@ -46,11 +46,9 @@ jobs:
           john-1.8.0.9-jumbo-macosx_sse4/run/john --format=gpg -w=rockyou.txt hash
 
       - name: Show
-        run: |
-          john-1.8.0.9-jumbo-macosx_sse4/run/john --show hash > result.txt
-          echo "RESULT=$(cat result.txt)" >> $GITHUB_OUTPUT
-          cat result.txt
         id: show_result
+        run: |
+          echo "RESULT=$(john-1.8.0.9-jumbo-macosx_sse4/run/john --show hash)" >> $GITHUB_OUTPUT
       
       - name: Send mail
         run: |
