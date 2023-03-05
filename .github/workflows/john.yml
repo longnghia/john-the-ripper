@@ -48,7 +48,9 @@ jobs:
       - name: Show
         id: show_result
         run: |
-          echo "RESULT=$(john-1.8.0.9-jumbo-macosx_sse4/run/john --show hash)" >> $GITHUB_OUTPUT
+          echo "text<<EOF" >> $GITHUB_OUTPUT
+          echo "$(john-1.8.0.9-jumbo-macosx_sse4/run/john --show hash)" >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
       
       - name: Send mail
         run: |
