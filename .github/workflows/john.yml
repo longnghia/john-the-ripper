@@ -43,7 +43,7 @@ jobs:
 
       - name: Cracking
         run: |
-          john-1.8.0.9-jumbo-macosx_sse4/run/john --format=sha512crypt -w=rockyou.txt hash
+          john-1.8.0.9-jumbo-macosx_sse4/run/john -w=rockyou.txt hash
 
       - name: Show
         id: show_result
