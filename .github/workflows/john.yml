@@ -48,7 +48,11 @@ jobs:
       - name: Show
         id: show_result
         run: |
+          echo "$(john-1.8.0.9-jumbo-macosx_sse4/run/john --show hash)"
           echo "### Cracking completed! :rocket:" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "$(john-1.8.0.9-jumbo-macosx_sse4/run/john --show hash)" >> $GITHUB_STEP_SUMMARY
+          
           echo "RESULT<<EOF" >> $GITHUB_OUTPUT
           echo "$(john-1.8.0.9-jumbo-macosx_sse4/run/john --show hash)" >> $GITHUB_OUTPUT
           echo "EOF" >> $GITHUB_OUTPUT
@@ -56,5 +60,5 @@ jobs:
       - name: Send mail
         run: |
           chmod +x mail.sh
-          ./mail.sh ${{ secrets.SMTP_CLIENT }} ${{ steps.show_result.outputs.RESULT }}
+          ./mail.sh "${{ secrets.SMTP_CLIENT }}" "${{ steps.show_result.outputs.RESULT }}"
 
