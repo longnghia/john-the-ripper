@@ -30,9 +30,11 @@ Content-Disposition: inline
     <div style="display: block; margin: auto; max-width: 600px;" class="main">
       <p>Passwords for you 😎</p>
     </div>
-    <div>
+
+    <pre>
     $2
-    </div>
+    </pre>
+
     <style>
       .main { background-color: white; }
       a:hover { border-left-width: 1em; min-height: 2em; }
