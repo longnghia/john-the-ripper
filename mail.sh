@@ -28,7 +28,7 @@ Content-Disposition: inline
   </head>
   <body style="font-family: sans-serif;">
     <div style="display: block; margin: auto; max-width: 600px;" class="main">
-      <p>Passwords for you 😎.</p>
+      <p>Passwords for you 😎</p>
     </div>
     <div>
     $2
