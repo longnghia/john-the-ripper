@@ -5,9 +5,9 @@ on:
     branches: ["**"]
 
 jobs:
-  build:
+  crack:
     runs-on: macos-12
-
+    timeout-minutes: 120
     steps:
       - uses: actions/checkout@v2
 
@@ -46,14 +46,19 @@ jobs:
           john-1.8.0.9-jumbo-macosx_sse4/run/john --format=phpass -w=rockyou.txt hash
 
       - name: Show
+        id: show_result
         run: |
-          john-1.8.0.9-jumbo-macosx_sse4/run/john --show hash > result.txt
-          cat result.txt
-      
-      - name: Result
-        uses: actions/upload-artifact@v3
-        with:
-          name: result.txt
-          path: result.txt
+          echo "$(john-1.8.0.9-jumbo-macosx_sse4/run/john --show hash)"
+          echo "### Cracking completed! :rocket:" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "$(john-1.8.0.9-jumbo-macosx_sse4/run/john --show hash)" >> $GITHUB_STEP_SUMMARY
 
+          echo "RESULT<<EOF" >> $GITHUB_OUTPUT
+          echo "$(john-1.8.0.9-jumbo-macosx_sse4/run/john --show hash)" >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
+      
+      - name: Send mail
+        run: |
+          chmod +x mail.sh
+          ./mail.sh "${{ secrets.SMTP_CLIENT }}" $'${{ steps.show_result.outputs.RESULT }}'
 
